@@ -1,0 +1,47 @@
+﻿@model SearchGitHubRepositories.Models.RepositoryData
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="search">
+    <form class="form-check-inline" action="~/Home/Index" method="post">
+        @if (ViewBag.SearchString != null)
+        {
+            @:<input name="search" class="search-text" type="search" placeholder="Search" aria-label="Search" value="@ViewBag.SearchString" />
+        } 
+        
+        else
+        {
+            @:<input name="search" class="search-text" type="search" placeholder="Search" aria-label="Search" />
+
+        }
+
+        <button class="search-btn" type="submit">Поиск</button>
+    </form>
+</div>
+
+@if(Model != null && Model.items.Count > 0)
+{
+    <div class="container m-5">
+        <div class="cards d-flex flex-wrap">
+            @foreach(var item in Model.items)
+            {
+                <div class="repos-card w-25 p-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <ul>
+                                    <li>Имя проекта - @item.name</li>
+                                    <li>Автор - @item.owner.login</li>
+                                    <li>Stargazers - @item.stargazers</li>
+                                    <li>Watchers - @item.watchers</li>
+                                </ul>
+                            </div>
+                            <a target="_blank" href="https:\\github.com/@item.full_name" class="card-link">Переход на GitHub</a>
+                        </div>
+                    </div>    
+                </div>
+            }
+        </div>
+    </div>
+}
